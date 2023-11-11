@@ -1,5 +1,5 @@
 <x-guest-layout>
 
-    <x-test_standing />
+    <x-team_standing :teams="$teams" :tournament="$tournament"/>
 
 </x-guest-layout>
