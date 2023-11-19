@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <h2 class="text-center text-green-500 pb-5">Game {{ $game->id }} - Matchweek {{ $game->matchweek }}</h2>
+    <h2 class="text-center text-green-500 pb-5 text-xl">Game {{ $game->id }} - Matchweek {{ $game->matchweek }}</h2>
     <div class="w-full max-w-md mx-auto p-10 rounded-md border shadow-lg bg-grey">
         <div class="text-center text-2xl font-semibold mb-4">{{ $game->homeTeam->name }} vs {{ $game->awayTeam->name }}</div>
 

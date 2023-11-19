@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AdminGameController;
+use App\Http\Controllers\AdminTeamController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StandingController;
@@ -76,5 +78,13 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::post('/admin/teams', [AdminTeamController::class, 'store']);
+Route::get('/admin/teams/create', [AdminTeamController::class, 'create']);
+
+//Route::post('/admin/games', [AdminTeamController::class, 'store']);
+Route::get('/admin/games/create', [AdminGameController::class, 'create']);
+
+
 
 require __DIR__.'/auth.php';

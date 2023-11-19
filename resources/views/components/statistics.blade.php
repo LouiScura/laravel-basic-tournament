@@ -1,5 +1,5 @@
 @props(['statistics'])
-<h1>Game Statistics</h1>
+<h1 class="text-center text-yellow-500 text-lg py-2">Game Statistics</h1>
 @foreach($statistics as $single_statistics)
     <div class="container mx-auto px-20">
         <div class="flex flex-col w-full" style="cursor: auto;">
