@@ -4,9 +4,9 @@ use App\Http\Controllers\AdminGameController;
 use App\Http\Controllers\AdminTeamController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\PlayerController;
+use App\Http\Controllers\PlayerStatsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TeamController;
-use App\Models\Game;
 use Illuminate\Support\Facades\Route;
 
 // Home
@@ -26,6 +26,9 @@ Route::group(['prefix' => 'games'], function (){
 
 // Players
 Route::get('/players', [PlayerController::class, 'index'])->name('players');
+
+// Stats
+Route::get('/stats', [PlayerStatsController::class, 'index'])->name('stats');
 
 // Admin Stuff
 Route::get('/dashboard', function () {
