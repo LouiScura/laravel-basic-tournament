@@ -1,3 +1,3 @@
 <x-app-layout>
-    <livewire:create-game />
+    <livewire:create-player />
 </x-app-layout>

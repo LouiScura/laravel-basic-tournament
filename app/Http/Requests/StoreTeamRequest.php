@@ -22,8 +22,8 @@ class StoreTeamRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'team_name' => ['required', 'string', 'max:255'],
-            'team_town' => ['required', 'string', 'max:255'],
+            'team_name' => ['required', 'regex:/^[a-zA-Z\s]*$/', 'max:255'],
+            'team_town' => ['required', 'regex:/^[a-zA-Z\s]*$/', 'max:255'],
             'team_logo' => ['required', 'image'],
         ];
     }

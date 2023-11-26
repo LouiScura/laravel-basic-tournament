@@ -1,21 +1,34 @@
 <x-guest-layout>
-    <h2 class="text-center text-green-500 pb-5 text-xl">Game {{ $game->id }} - Matchweek {{ $game->matchweek }}</h2>
-    <div class="w-full max-w-md mx-auto p-10 rounded-md border shadow-lg bg-grey">
-        <div class="text-center text-2xl font-semibold mb-4">{{ $game->homeTeam->name }} vs {{ $game->awayTeam->name }}</div>
-
-        <div class="flex justify-center items-center">
-            <div class="w-1/2 text-center">
-                <div class="text-xl font-semibold mb-2 text-gray-300">{{ $game->homeTeam->name }}</div>
-{{--                <img src="team-a-logo.png" alt="Team A Logo" class="w-24 h-24 mx-auto mb-2">--}}
-                <p class="text-gray-600">{{ $game->homeTeam->town }}</p>
+    <section>
+        <div class="grid grid-cols-5 gap-3 items-center">
+            <div class="col-span-2">
+                <p class="text-sm text-gray-600">Matchweek {{ $game->matchweek }} - Game {{ $game->id }}</p>
+                <p class="text-xs text-gray-600 py-2">{{ $game->matchdate }}</p>
+                <div class="flex justify-between items-center">
+                    <div class="w-20 h-20">
+                        <img src="{{ Storage::url($game->homeTeam->logo) }}" alt="{{ $game->homeTeam->name }}" class="w-full object-cover"/>
+                    </div>
+                    <h2 class="text-slate-200 text-2xl">{{ $game->homeTeam->name }}</h2>
+                    <span class="text-slate-200 text-2xl">{{ $game->home_team_score }}</span>
+                </div>
+            </div>
+            <div class="text-center">
+                <span class="text-slate-200 text-xl text-center">-</span>
+            </div>
+            <div class="col-span-2">
+                <div class="flex justify-between items-center">
+                    <span class="text-slate-200 text-2xl">{{ $game->away_team_score }}</span>
+                    <div class="w-20 h-20">
+                        <img src="{{ Storage::url($game->awayTeam->logo) }}" alt="{{ $game->awayTeam->name }}" class="w-full object-cover"/>
+                    </div>
+                    <h2 class="text-slate-200 text-2xl">{{ $game->awayTeam->name }}</h2>
+                </div>
             </div>
 
-            <div class="w-1/2 text-center">
-                <div class="text-xl font-semibold mb-2 text-gray-300">{{ $game->awayTeam->name }}</div>
-{{--                <img src="team-b-logo.png" alt="Team B Logo" class="w-24 h-24 mx-auto mb-2">--}}
-                <p class="text-gray-600">{{ $game->awayTeam->town }}</p>
+            <div class="relative w-full sm:rounded-lg">
+                <x-stats :game="$game"/>
             </div>
+
         </div>
-    </div>
-    <x-statistics :game="$game" :statistics="$statistics"></x-statistics>
+    </section>
 </x-guest-layout>

@@ -1,30 +1,47 @@
 <x-guest-layout>
 
-    <x-nav-games/>
+        @if($games->isNotEmpty())
+            @php
+                $groupedGames = $games->groupBy('matchweek');
+            @endphp
 
-    <div class="flex flex-col">
-        <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
-            @if(isset($displayType))
-                <h2 class="text-center text-green-500 text-lg">{{ $displayType }} Games</h2>
-            @endif
-
-            <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
-                <div class="overflow-hidden">
-                    <table class="min-w-full text-left text-sm font-light text-blue-500">
-                        <x-nav-games-table/>
-                        <tbody>
-                        @foreach($games as $game)
-                            <tr class="border-b dark:border-neutral-500">
-                                <td class="whitespace-nowrap px-6 py-4 font-medium">{{ $game->matchweek }}</td>
-                                <td class="whitespace-nowrap px-6 py-4">{{ $game->homeTeam->name }} vs {{ $game->awayTeam->name }}</td>
-                                <td class="whitespace-nowrap px-6 py-4">{{ $game->matchdate }}</td>
-                            </tr>
+            @foreach($groupedGames as $matchweek => $matchweekGames)
+                <div class="{{$loop->iteration > 1 ? 'my-5' : ''}} }}">
+                    <h2 class="text-violet-600 py-3">Matchweek {{ $matchweek }}</h2>
+                    <section class="grid grid-cols-2 gap-4 text-gray-200">
+                        @foreach($matchweekGames as $game)
+                            <a href="/games/{{ $game->id }}/week-{{ $game->matchweek }}" class="grid grid-cols-3 items-center border border-sky-900 rounded p-5 hover:bg-violet-900">
+                                <div class="col-span-2 border-r border-rose-500 pr-4 my-2">
+                                    <div class="flex text-gray-400 justify-between items-center">
+                                        <div class="w-10 h-10">
+                                            <img src="{{ Storage::url($game->homeTeam->logo) }}" alt="{{ $game->homeTeam->name }}" class="w-full object-cover"/>
+                                        </div>
+                                        <span>{{ $game->homeTeam->name }}</span>
+                                        <span>{{ $game->home_team_score }}</span>
+                                    </div>
+                                    <div class="flex text-gray-400 justify-between items-center">
+                                        <div class="w-10 h-10">
+                                            <img src="{{ Storage::url($game->awayTeam->logo) }}" alt="{{ $game->awayTeam->name }}" class="w-full object-cover"/>
+                                        </div>
+                                        <span>{{ $game->awayTeam->name }}</span>
+                                        <span>{{ $game->away_team_score }}</span>
+                                    </div>
+                                </div>
+                                <div class="pl-4 text-sm text-center">
+                                    @if(is_null($game->matchdate))
+                                        <span>No specified</span>
+                                    @else
+                                        <span>{{ $game->matchdate }}</span>
+                                    @endif
+                                </div>
+                            </a>
                         @endforeach
-                        </tbody>
-                    </table>
+                    </section>
                 </div>
-            </div>
-        </div>
-    </div>
+            @endforeach
+        @else
+            <x-not-found name="matches"/>
+        @endif
+
 
 </x-guest-layout>

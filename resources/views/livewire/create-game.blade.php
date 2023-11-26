@@ -1,80 +1,77 @@
-<div>
-    <div class="w-full max-w-xs">
-        <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" action="/admin/teams" method="post" enctype="multipart/form-data" wire:submit="save">
+<div class="max-w-5xl mx-auto sm:px-6 lg:px-8 mt-5">
+    <h1 class="text-2xl text-green-50 pt-5 pb-4">Create a match</h1>
+    <form method="post" enctype="multipart/form-data" wire:submit="save">
 
-            @csrf
+        @csrf
 
-            <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="home_team_id">
-                    Local Team
-                </label>
+        @if(session('message'))
+            <div class="mb-3 alert bg-green-500 bg-opacity-50 text-white font-bold rounded-md p-3">
+                {{ session('message') }}
+            </div>
+        @endif
 
-                <select name="home_team_id" wire:model="form.home_team_id">
-                    @foreach ($teams as $team)
-                        <option value="{{ $team->id }}" @selected(old('home_team_id') == $team->id) wire:key="{{ $team->id }}">
-                            {{ $team->name }}
-                        </option>
-                    @endforeach
-                </select>
+        <div class="text-sm text-yellow-400 pb-3" wire:loading>
+            Creating match...
+        </div>
 
-                <x-input-error :messages="$errors->get('form.home_team_id')" class="mt-3" />
+        <!-- Local Name -->
+        <div class="mb-6">
+            <x-input-label for="home_team_id" :value="__('Local Team')" class="pb-3" />
+            <select name="home_team_id" wire:model="form.home_team_id" class="w-full">
+                @foreach ($teams as $team)
+                    <option value="{{ $team->id }}" @selected(old('home_team_id') == $team->id) wire:key="{{ $team->id }}">
+                        {{ $team->name }}
+                    </option>
+                @endforeach
+            </select>
+
+            <x-input-error :messages="$errors->get('form.home_team_id')" class="mt-3" />
+        </div>
+
+        <!-- Away Name -->
+        <div class="mb-6">
+            <x-input-label for="away_team_id" :value="__('Away Team')" class="pb-3" />
+            <select name="away_team_id" wire:model="form.away_team_id" class="w-full">
+                @foreach ($teams as $team)
+                    <option value="{{ $team->id }}" @if(old('away_team_id') == $team->id || !old('away_team_id') && $loop->first) selected @endif wire:key="{{ $team->id }}">
+                        {{ $team->name }}
+                    </option>
+                @endforeach
+            </select>
+
+            <x-input-error :messages="$errors->get('form.away_team_id')" class="mt-3" />
+        </div>
+
+        <!-- Match date  -->
+        <div class="mb-6">
+            <x-input-label for="matchdate" :value="__('Match date')" class="pb-3"/>
+            <input class="w-full" type="date" id="matchdate" name="matchdate" min="2023-01-01" max="2024-12-31" wire:model.live="form.matchDate" />
+        </div>
+
+        <!-- Match week  -->
+        <div class="mb-6">
+            <x-input-label for="matchweek" :value="__('Match week')" class="pb-3"/>
+            <input type="number" id="matchweek" name="matchweek" min="1" max="10" wire:model="form.matchWeek">
+        </div>
+
+        <?php if ($form->matchDate < now()) : ?>
+            <div class="mb-6">
+                <x-input-label for="home_team_score" :value="__('Home Team Score')" class="pb-3"/>
+                <input type="number" id="home_team_score" name="home_team_score" min="1" max="10" wire:model="form.home_team_score">
             </div>
 
+        <div class="mb-6">
+            <x-input-label for="away_team_score" :value="__('Away Team Score')" class="pb-3"/>
+            <input type="number" id="away_team_score" name="away_team_score" min="1" max="10" wire:model="form.away_team_score">
+        </div>
+        <?php endif; ?>
 
-            <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="away_team_id">
-                    Away Team
-                </label>
+        <div class="flex items-center justify-between">
+            <x-primary-button class="mt-4 mb-8">
+                {{ __('Create Team') }}
+            </x-primary-button>
+        </div>
 
-                <select name="away_team_id" wire:model="form.away_team_id">
-                    @foreach ($teams as $team)
-                        <option value="{{ $team->id }}" @selected(old('form.away_team_id') == $team->id) wire:key="{{ $team->id }}" >
-                            {{ $team->name }}
-                        </option>
-                    @endforeach
-                </select>
-
-                <x-input-error :messages="$errors->get('form.away_team_id')" class="mt-2" />
-            </div>
-
-            <div class="mb-4">
-                <label for="matchdate">Match date: </label>
-                <input type="date" id="matchdate" name="matchdate" min="2023-01-01" max="2024-12-31" wire:model.live="form.matchDate" />
-            </div>
-
-            <div class="mb-4">
-                <label for="matchweek">Match week</label>
-                <input type="number" id="matchweek" name="matchweek" min="1" max="10" wire:model="form.matchWeek">
-            </div>
-
-            <?php if ($form->matchDate < now()) : ?>
-                <div class="mb-4">
-                    <label for="home_team_score">Home Team Score</label>
-                    <input type="number" id="home_team_score" name="home_team_score" min="0" max="10" wire:model="form.home_team_score">
-                </div>
-
-                <div class="mb-4">
-                    <label for="away_team_score">Away Team Score</label>
-                    <input type="number" id="away_team_score" name="away_team_score" min="0" max="10" wire:model="form.away_team_score">
-                </div>
-            <?php endif; ?>
-
-            <div class="flex items-center justify-between">
-                <button class="bg-blue-500 hover:bg-blue-700 hover:text-white text-blue-500 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                    Create Match
-                </button>
-            </div>
-
-            <div wire:loading>
-                Creating match...
-            </div>
-
-            @if(session('message'))
-                <div class="mt-3 alert alert-{{ session('status') }} bg-opacity-50 text-white font-bold rounded-md p-4">
-                    {{ session('message') }}
-                </div>
-            @endif
-
-        </form>
-    </div>
+    </form>
 </div>
+

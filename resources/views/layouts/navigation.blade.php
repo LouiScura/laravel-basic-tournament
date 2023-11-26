@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+<nav x-data="{ open: false }" class="bg-[#3F1052] border-b border-gray-100 dark:border-gray-700">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -12,8 +12,20 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                    <x-nav-link :href="route('games')" :active="request()->routeIs('games')">
+                        {{ __('Back to Matches') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('create_team')" :active="request()->routeIs('create_team')">
+                        {{ __('Create Team') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('create_match')" :active="request()->routeIs('create_match')">
+                        {{ __('Create Match') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('create_player')" :active="request()->routeIs('create_player')">
+                        {{ __('Create Player') }}
                     </x-nav-link>
                 </div>
             </div>

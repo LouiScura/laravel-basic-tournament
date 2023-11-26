@@ -3,70 +3,29 @@
 use App\Http\Controllers\AdminGameController;
 use App\Http\Controllers\AdminTeamController;
 use App\Http\Controllers\GameController;
+use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\StandingController;
 use App\Http\Controllers\TeamController;
-use App\Http\Controllers\GamePlayerStatistics;
 use App\Models\Game;
-use App\Models\Tournament;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+// Home
+Route::get('/', [GameController::class, 'index'])->name('home');
 
-Route::get('/', [StandingController::class, 'index'])->name('home');
-
-// Team
-Route::get('/teams/', [TeamController::class, 'index'])->name('teams');
-Route::get('/teams/{team:id}', [TeamController::class, 'show']);
-
-// Tournaments
-Route::get('/tournaments', function(){
-
-    $tournaments = Tournament::all();
-
-    return view('tournament', [
-        'tournaments' => $tournaments
-    ]);
-
-})->name('tournaments');
-
-// Games
-Route::get('/games', [GameController::class, 'index'])->name('games');
-Route::get('/games/game-{game:id}/matchweek-{matchweek}', [GameController::class, 'show']);
-Route::get('/games/matchweeks/', function (){
-    $matchweeks = Game::distinct('matchweek')->pluck('matchweek');
-
-    return view('games.matchweeks', [
-        'matchweeks' => $matchweeks
-    ]);
-})->name('matchweeks');
-Route::get('/games/matchweek/{matchweek}', [GameController::class, 'index'])->name('single_matchweek');
-Route::get('/games/{filter?}', function (?string $filter = 'future-games') {
-
-    if ($filter == 'future-games') {
-        $games = Game::where('matchdate', '>', now())->get();
-        $displayType = 'Future';
-        return view('games.index', compact('games', 'displayType'));
-    }
-
-    if ($filter == 'past-games') {
-        $games = Game::where('matchdate', '<', now())->get();
-        $displayType = 'Past';
-        return view('games.index', compact('games', 'displayType'));
-    }
-
-    return $filter; // Handle other cases or provide a default view
+// Teams
+Route::group(['prefix' => 'teams'], function (){
+    Route::get('/', [TeamController::class, 'index'])->name('teams');
+    Route::get('/{team:id}', [TeamController::class, 'show']);
 });
 
+// Games
+Route::group(['prefix' => 'games'], function (){
+    Route::get('/', [GameController::class, 'index'])->name('games');
+    Route::get('/{game:id}/week-{matchweek}', [GameController::class, 'show']);
+});
+
+// Players
+Route::get('/players', [PlayerController::class, 'index'])->name('players');
 
 // Admin Stuff
 Route::get('/dashboard', function () {
@@ -79,12 +38,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::post('/admin/teams', [AdminTeamController::class, 'store']);
-Route::get('/admin/teams/create', [AdminTeamController::class, 'create']);
-
-//Route::post('/admin/games', [AdminTeamController::class, 'store']);
-Route::get('/admin/games/create', [AdminGameController::class, 'create']);
-
-
+Route::group(['middleware'=> 'auth', 'prefix' => 'admin'], function (){
+    Route::post('/teams', [AdminTeamController::class, 'store']);
+    Route::get('/teams/create', [AdminTeamController::class, 'create'])->name('create_team');
+    Route::get('/games/create', [AdminGameController::class, 'create'])->name('create_match');
+    Route::view('/players/create', 'admin.players.create')->name('create_player');
+});
 
 require __DIR__.'/auth.php';

@@ -9,12 +9,20 @@ class Player extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'team_id',
+        'first_name',
+        'last_name',
+        'position',
+        'age'
+    ];
+
     public function team(){
         return $this->belongsTo(Team::class);
     }
 
     public function gamePlayerStatistics() {
-        return $this->hasMany(GamePlayerStatistics::class);
+        return $this->hasMany(GamePlayerStatistics::class,  'player_id', 'id');
     }
 
 }
