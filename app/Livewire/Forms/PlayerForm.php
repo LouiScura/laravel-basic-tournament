@@ -3,9 +3,11 @@
 namespace App\Livewire\Forms;
 
 use App\Models\Player;
-use Livewire\Attributes\Rule;
 use Livewire\Form;
-
+use Livewire\Attributes\Rule;
+use Livewire\Attributes\Validate;
+use Livewire\Component;
+//use Illuminate\Validation\Rule;
 class PlayerForm extends Form
 {
     #[Rule('required')]
@@ -18,12 +20,18 @@ class PlayerForm extends Form
     public $position = '';
     #[Rule('required|alpha_num', as: 'Age')]
     public $age = null;
-
+    #[Validate('image|mimes:png,jpg|max:102400')] // 1MB Max
+    public $avatar;
 
     public function store(): void
     {
+        $validated = $this->validate();
 
-        Player::create($this->all());
+        if($this->avatar){
+            $validated['avatar'] = $this->avatar->store('players', 'public');
+        }
+
+        Player::create($validated);
 
         $this->reset();
     }

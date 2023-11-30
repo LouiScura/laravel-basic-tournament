@@ -14,7 +14,8 @@ class Player extends Model
         'first_name',
         'last_name',
         'position',
-        'age'
+        'age',
+        'avatar'
     ];
 
     public function team(){
