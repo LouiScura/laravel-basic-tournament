@@ -37,7 +37,6 @@ class GameForm extends Form
 
     public function store()
     {
-
         Game::create($this->all());
 
         $this->reset();

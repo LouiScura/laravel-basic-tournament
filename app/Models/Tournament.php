@@ -8,7 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Tournament extends Model
 {
     use HasFactory;
-    protected $guarded = [];
+    protected $fillable = [
+        'name',
+        'year',
+        'start_time',
+        'end_time',
+    ];
 
     public function teams(){
         return $this->belongsToMany(Team::class, 'team_tournament', 'tournament_id', 'team_id');

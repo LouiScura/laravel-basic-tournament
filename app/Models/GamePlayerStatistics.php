@@ -9,6 +9,15 @@ class GamePlayerStatistics extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'game_id',
+        'player_id',
+        'yellow_cards',
+        'red_cards',
+        'goals_scored',
+        'assists'
+    ];
+
     // Define the relationship with Game and Player
     public function game() {
         return $this->belongsTo(Game::class, 'game_id', 'id');

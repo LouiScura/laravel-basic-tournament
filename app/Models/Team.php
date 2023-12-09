@@ -9,7 +9,11 @@ class Team extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $fillable = [
+        'name',
+        'town',
+        'logo'
+    ];
 
     public function tournaments(){
         return $this->belongsToMany(Tournament::class, 'team_tournament', 'team_id', 'tournament_id');
