@@ -6,11 +6,15 @@ use App\Http\Controllers\GameController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\PlayerStatsController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StandingController;
 use App\Http\Controllers\TeamController;
 use Illuminate\Support\Facades\Route;
 
 // Home
 Route::get('/', [GameController::class, 'index'])->name('home');
+
+// Players
+Route::get('/standings', [StandingController::class, 'index'])->name('standings');
 
 // Teams
 Route::group(['prefix' => 'teams'], function (){
@@ -26,6 +30,8 @@ Route::group(['prefix' => 'games'], function (){
 
 // Players
 Route::get('/players', [PlayerController::class, 'index'])->name('players');
+
+
 
 // Stats
 Route::get('/stats', [PlayerStatsController::class, 'index'])->name('stats');

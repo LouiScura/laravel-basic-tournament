@@ -48,29 +48,32 @@
             <input class="w-full" type="date" id="matchdate" name="matchdate" min="2023-01-01" max="2024-12-31" wire:model.live="form.matchDate" />
         </div>
 
-        <!-- Match week  -->
-        <div class="mb-6">
-            <x-input-label for="matchweek" :value="__('Match week')" class="pb-3"/>
-            <input type="number" id="matchweek" name="matchweek" min="1" max="10" wire:model="form.matchWeek">
-        </div>
+        <div class="flex w-6/12">
+            <!-- Match week  -->
+            <div class="mb-6 flex-1">
+                <x-input-label for="matchweek" :value="__('Match week')" class="pb-3"/>
+                <input type="number" id="matchweek" name="matchweek" min="1" max="10" wire:model="form.matchWeek">
+            </div>
 
-        <?php if ($form->matchDate < now()) : ?>
-            <div class="mb-6">
+            <?php if ($form->matchDate < now()) : ?>
+            <div class="mb-6 flex-1">
                 <x-input-label for="home_team_score" :value="__('Home Team Score')" class="pb-3"/>
                 <input type="number" id="home_team_score" name="home_team_score" min="1" max="10" wire:model="form.home_team_score">
             </div>
 
-        <div class="mb-6">
-            <x-input-label for="away_team_score" :value="__('Away Team Score')" class="pb-3"/>
-            <input type="number" id="away_team_score" name="away_team_score" min="1" max="10" wire:model="form.away_team_score">
+            <div class="mb-6 flex-1 ">
+                <x-input-label for="away_team_score" :value="__('Away Team Score')" class="pb-3"/>
+                <input type="number" id="away_team_score" name="away_team_score" min="1" max="10" wire:model="form.away_team_score">
+            </div>
+            <?php endif; ?>
         </div>
-        <?php endif; ?>
 
         <div class="flex items-center justify-between">
             <x-primary-button class="mt-4 mb-8">
                 {{ __('Create Team') }}
             </x-primary-button>
         </div>
+
 
     </form>
 </div>

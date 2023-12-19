@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('games', function (Blueprint $table) {
-
+        Schema::table('standings', function (Blueprint $table) {
+            $table->unsignedBigInteger('tournament_id')->default(1)->change();
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('games', function (Blueprint $table) {
-            //
+        Schema::table('standings', function (Blueprint $table) {
+
         });
     }
 };

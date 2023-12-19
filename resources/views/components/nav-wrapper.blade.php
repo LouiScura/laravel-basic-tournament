@@ -27,6 +27,10 @@
             {{ __('Matches') }}
         </x-nav-link>
 
+        <x-nav-link class="uppercase tracking-wide" :href="route('standings')" :active="request()->routeIs('standings')">
+            {{ __('Standings') }}
+        </x-nav-link>
+
         <x-nav-link class="uppercase tracking-wide" :href="route('teams')" :active="request()->routeIs('teams')">
             {{ __('Teams') }}
         </x-nav-link>
