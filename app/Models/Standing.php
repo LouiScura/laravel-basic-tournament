@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -26,5 +27,12 @@ class Standing extends Model
 
     public function team(){
         return $this->belongsTo(Team::class);
+    }
+    
+    protected function GamesPlayed(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->wins + $this->losses + $this->draws,
+        );
     }
 }
