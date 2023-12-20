@@ -18,8 +18,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                        @foreach($standings as $standing)
-                            <tr class="{{ $loop->odd ? 'bg-gray-900 bg-opacity-30' : '' }}">
+                    @foreach($standings as $standing)
+                        <tr class="{{ $loop->odd ? 'bg-gray-900 bg-opacity-30' : '' }}">
                             <td class="text-left p-1">{{ $standing->id }}</td>
                             <td class="text-left p-1"><span class="hidden md:inline">{{ $standing->team->name }}</span></td>
                             <td class="text-center p-1">{{ $standing->games_played }}</td>
