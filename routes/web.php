@@ -38,7 +38,7 @@ Route::get('/stats', [PlayerStatsController::class, 'index'])->name('stats');
 
 // Admin Stuff
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('admin.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -50,8 +50,10 @@ Route::middleware('auth')->group(function () {
 Route::group(['middleware'=> 'auth', 'prefix' => 'admin'], function (){
     Route::post('/teams', [AdminTeamController::class, 'store']);
     Route::get('/teams/create', [AdminTeamController::class, 'create'])->name('create_team');
-    Route::get('/games/create', [AdminGameController::class, 'create'])->name('create_match');
-    Route::view('/players/create', 'admin.players.create')->name('create_player');
+    Route::get('/games/create', [AdminGameController::class, 'create'])->name('create_match')
+        ->middleware('team_exists');
+    Route::view('/players/create', 'admin.players.create')->name('create_player')
+        ->middleware('team_exists');;
 });
 
 require __DIR__.'/auth.php';

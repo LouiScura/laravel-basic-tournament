@@ -7,6 +7,8 @@
                 'players' => $playersWithGoalsScored,
                 'statistic' => 'goals_scored'
             ])
+        @else
+            <x-not-found name="Goals"/>
         @endif
 
         @if($playersWithAssists->isNotEmpty())
@@ -15,6 +17,8 @@
                 'players' => $playersWithAssists,
                 'statistic' => 'assists'
             ])
+        @else
+            <x-not-found name="Assists"/>
         @endif
 
         @if($playersWithYellowCards->isNotEmpty())
@@ -23,6 +27,8 @@
                 'players' => $playersWithYellowCards,
                 'statistic' => 'yellow_cards'
             ])
+        @else
+            <x-not-found name="Yellow Cards"/>
         @endif
 
         @if($playersWithRedCards->isNotEmpty())
@@ -31,7 +37,11 @@
                 'players' => $playersWithRedCards,
                 'statistic' => 'red_cards'
             ])
+        @else
+            <x-not-found name="Red Cards"/>
         @endif
+
+
 
     </div>
 
