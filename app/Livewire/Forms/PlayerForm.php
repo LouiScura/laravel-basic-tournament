@@ -10,7 +10,7 @@ use Livewire\Component;
 //use Illuminate\Validation\Rule;
 class PlayerForm extends Form
 {
-    #[Rule('required')]
+    #[Rule('required', as: 'Team')]
     public $team_id  = '';
     #[Rule('required|min:4|max:10|alpha:ascii', as: 'First Name')]
     public $first_name = '';
