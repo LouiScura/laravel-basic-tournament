@@ -1,7 +1,6 @@
 <div class="max-w-5xl mx-auto sm:px-6 lg:px-8 mt-5">
     <h1 class="text-2xl text-green-50 pt-5 pb-4">Create a match</h1>
     <form method="post" enctype="multipart/form-data" wire:submit="save">
-
         @csrf
 
         @if(session('message'))
@@ -56,24 +55,31 @@
             </div>
 
             <?php if ($form->matchDate < now()) : ?>
-            <div class="mb-6 flex-1">
-                <x-input-label for="home_team_score" :value="__('Home Team Score')" class="pb-3"/>
-                <input type="number" id="home_team_score" name="home_team_score" min="1" max="10" wire:model="form.home_team_score">
-            </div>
+                <div class="mb-6 flex-1">
+                    <x-input-label for="home_team_score" :value="__('Home Team Score')" class="pb-3"/>
+                    <input type="number" id="home_team_score" name="home_team_score" min="1" max="10" wire:model="form.home_team_score">
+                </div>
 
-            <div class="mb-6 flex-1 ">
-                <x-input-label for="away_team_score" :value="__('Away Team Score')" class="pb-3"/>
-                <input type="number" id="away_team_score" name="away_team_score" min="1" max="10" wire:model="form.away_team_score">
-            </div>
+                <div class="mb-6 flex-1 ">
+                    <x-input-label for="away_team_score" :value="__('Away Team Score')" class="pb-3"/>
+                    <input type="number" id="away_team_score" name="away_team_score" min="1" max="10" wire:model="form.away_team_score">
+                </div>
             <?php endif; ?>
         </div>
 
+        <!-- Game Player Stats -->
+        @if($form->matchDate < now() && $players->isNotEmpty())
+
+            <h2 class="text-xl text-green-50 pt-5 pb-4">Game Stats</h2>
+
+            <x-game-player-stats :players="$players"/>
+        @endif
+
         <div class="flex items-center justify-between">
             <x-primary-button class="mt-4 mb-8">
-                {{ __('Create Team') }}
+                {{ __('Create Game') }}
             </x-primary-button>
         </div>
-
 
     </form>
 </div>

@@ -3,6 +3,7 @@
 namespace App\Livewire\Forms;
 
 use App\Models\Game;
+use App\Models\GamePlayerStatistics;
 use App\Models\Team;
 use Livewire\Attributes\Rule;
 use Livewire\Form;
@@ -12,16 +13,32 @@ class GameForm extends Form
 {
     #[Rule('required')]
     public $home_team_id  = '';
+
     #[Rule('required')]
     public $away_team_id = '';
+
     #[Rule('required|date')]
     public $matchDate = '';
+
     #[Rule('required|numeric')]
     public $matchWeek = '';
+
     #[Rule('required|numeric')]
     public $home_team_score = null;
+
     #[Rule('required|numeric')]
     public $away_team_score = null ;
+
+    #[Rule('numeric')]
+    public $yellow_cards = 0;
+    #[Rule('numeric')]
+    public $red_cards = 0;
+
+    #[Rule('numeric')]
+    public $goals_scored = 0;
+
+    #[Rule('numeric')]
+    public $assists = 0;
 
     public function boot()
     {
@@ -34,12 +51,5 @@ class GameForm extends Form
                 return $input->matchDate < now();
             });
         });
-    }
-
-    public function store()
-    {
-        Game::create($this->all());
-
-        $this->reset();
     }
 }
