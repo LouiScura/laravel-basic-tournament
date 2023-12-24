@@ -10,13 +10,19 @@ class CreateGame extends Component
 {
     public GameForm $form;
 
+    public $players;
+
+    public $teams;
+
+    public function mount($players, $teams)
+    {
+        $this->players = $players;
+        $this->teams = $teams;
+    }
+
     public function render()
     {
-        $teams = Team::latest()->get();
-
-        return view('livewire.create-game', [
-            'teams' => $teams,
-        ]);
+        return view('livewire.create-game');
     }
 
     public function save()
@@ -28,7 +34,5 @@ class CreateGame extends Component
         return redirect('/admin/games/create');
 
     }
-
-
 
 }

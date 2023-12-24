@@ -1,3 +1,3 @@
 <x-app-layout>
-    <livewire:create-game />
+    <livewire:create-game :players="$players" :teams="$teams"/>
 </x-app-layout>

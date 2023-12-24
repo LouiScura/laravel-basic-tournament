@@ -3,6 +3,7 @@
 namespace App\Livewire\Forms;
 
 use App\Models\Game;
+use App\Models\Team;
 use Livewire\Attributes\Rule;
 use Livewire\Form;
 use Illuminate\Support\Fluent;
