@@ -35,15 +35,18 @@ class CreateGame extends Component
         // Create a new Game with data from Livewire form
         $game = Game::create($this->form->all());
 
-        // Access the relationship and create associated GamePlayerStatistics
-        $game->gamePlayerStatistics()->create([
-            'game_id'   => $game->id,
-            'player_id' => $this->player,
-            'yellow_cards' => $this->form->yellow_cards,
-            'red_cards' => $this->form->red_cards,
-            'goals_scored' => $this->form->goals_scored,
-            'assists' => $this->form->assists,
-        ]);
+
+        if($this->player) {
+            // Access the relationship and create associated GamePlayerStatistics
+            $game->gamePlayerStatistics()->create([
+                'game_id'   => $game->id,
+                'player_id' => $this->player,
+                'yellow_cards' => $this->form->yellow_cards,
+                'red_cards' => $this->form->red_cards,
+                'goals_scored' => $this->form->goals_scored,
+                'assists' => $this->form->assists,
+            ]);
+        }
 
         session()->flash('message', 'Match successfully created.');
 
