@@ -1,27 +1,17 @@
 <x-guest-layout>
-    @if($players->isNotEmpty())
-        <div class="grid grid-cols-4 gap-4 text-center">
-                @foreach($players as $player)
-                    <div class="max-w-sm rounded overflow-hidden shadow-lg">
-                        @if( $player->avatar )
-                            <img class="w-full" src="/storage/{{ $player->avatar }}" alt="Player">
-                        @endif
-                        <div class="px-6 py-4">
-                            <div class="font-bold text-xl mb-2">{{ $player->first_name }} {{ $player->last_name }}</div>
-                            <p class="text-white text-base">
-                                {{ $player->team->name }}
-                            </p>
-                            <p class="text-white text-base">
-                                {{ $player->position }}
-                            </p>
-                            <p class="text-white text-base">
-                                {{ $player->age }}
-                            </p>
-                        </div>
-                    </div>
-                @endforeach
-        </div>
-    @else
-        <x-not-found name="players"/>
-    @endif
+    <x-index-wrapper :items="$players" itemName="players">
+        <ul role="list" class="mx-auto mt-20 grid max-w-2xl grid-cols-5 gap-x-8 gap-y-14 lg:mx-0 lg:max-w-none">
+            @foreach($players as $player)
+                <li>
+                    @if( $player->avatar )
+                        <img class="mx-auto h-24 w-24 rounded-full" src="/storage/{{ $player->avatar }}" alt="">
+                    @endif
+                    <h3 class="mt-6 text-lg font-semibold leading-8 tracking-tight text-white">{{ $player->first_name }} {{ $player->last_name }}</h3>
+                    <p class="text-base leading-7 text-gray-400">{{ $player->team->name }}</p>
+                    <p class="text-base leading-6 text-gray-500">{{ $player->position }}</p>
+                    <p class="text-sm leading-4 text-gray-700">{{ $player->age }}</p>
+                </li>
+            @endforeach
+        </ul>
+    </x-index-wrapper>
 </x-guest-layout>
