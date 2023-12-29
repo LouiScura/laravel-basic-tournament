@@ -1,6 +1,6 @@
 @props(['standings'])
-<div class="text-white h-full bg-gray-800">
-    <h1 class="text-2xl md:text-4xl lg:text-5xl font-extrabold pt-8 px-2 text-center w-full">Premier League 2023</h1>
+<div class="text-white h-full bg-gray-900">
+    <h1 class="text-3xl font-bold tracking-tight text-white sm:text-4xl text-center py-8">Premier League 2023</h1>
     <div class="py-8">
         <div class="max-w-screen-xl px-2 mx-auto">
             <table class="w-full text-base">
@@ -20,7 +20,7 @@
                 <tbody>
                     @foreach($standings as $standing)
                         <tr class="{{ $loop->odd ? 'bg-gray-900 bg-opacity-30' : '' }}">
-                            <td class="text-left p-1">{{ $standing->id }}</td>
+                            <td class="text-left p-1">{{ $loop->iteration }}</td>
                             <td class="text-left p-1"><span class="hidden md:inline">{{ $standing->team->name }}</span></td>
                             <td class="text-center p-1">{{ $standing->games_played }}</td>
                             <td class="text-center p-1">{{ $standing->wins }}</td>

@@ -13,11 +13,4 @@ class TeamController extends Controller
             'teams' => Team::all()
         ]);
     }
-
-    public function show(Team $team){
-
-        return view('teams.show', [
-            'team' => $team
-        ]);
-    }
 }

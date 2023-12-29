@@ -13,20 +13,11 @@ use Illuminate\Support\Facades\Route;
 // Home
 Route::get('/', [GameController::class, 'index'])->name('home');
 
-// Players
+// Standings
 Route::get('/standings', [StandingController::class, 'index'])->name('standings');
 
 // Teams
-Route::group(['prefix' => 'teams'], function (){
-    Route::get('/', [TeamController::class, 'index'])->name('teams');
-    Route::get('/{team:id}', [TeamController::class, 'show']);
-});
-
-// Games
-Route::group(['prefix' => 'games'], function (){
-    Route::get('/', [GameController::class, 'index'])->name('games');
-    Route::get('/{game:id}/week-{matchweek}', [GameController::class, 'show']);
-});
+Route::get('/teams', [TeamController::class, 'index'])->name('teams');
 
 // Players
 Route::get('/players', [PlayerController::class, 'index'])->name('players');

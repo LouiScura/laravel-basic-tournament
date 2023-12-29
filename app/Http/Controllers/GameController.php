@@ -17,15 +17,4 @@ class GameController extends Controller
             'games' => $games
         ]);
     }
-
-    public function show(Game $game, $matchweek) {
-
-        return view('games.show', [
-           'game' => $game,
-           'statistics' => $game->gamePlayerStatistics
-        ]);
-    }
-
-
-
 }
