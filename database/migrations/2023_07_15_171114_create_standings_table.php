@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('standings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('tournament_id')->constrained()->cascadeOnDelete();;
-            $table->foreignId('team_id')->constrained();
+            $table->foreignId('tournament_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('team_id')->constrained()->cascadeOnDelete();
             $table->integer('wins')->nullable();
             $table->integer('losses')->nullable();
             $table->integer('draws')->nullable();
