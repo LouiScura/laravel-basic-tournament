@@ -69,12 +69,11 @@ class AdminTeamController extends Controller
 
     }
 
-
     public function destroy(Team $team)
     {
         $team->delete();
 
-        return to_route('teams.index');
+        return redirect()->route('teams.index')->with('message', 'Team successfully deleted.');
     }
 
 }

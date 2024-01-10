@@ -14,7 +14,7 @@
                 @foreach($sortedGames as $matchweek => $matchweekGames)
                     <div class="{{ $loop->first ? 'py-4 pb-4' : 'py-2'}}">
                         <div>
-                            <h2 class="text-xl font-semibold leading-tight">Matchweek {{ $matchweek }}</h2>
+                            <h2 class="text-xl font-semibold leading-tight text-gray-400">Matchweek {{ $matchweek }}</h2>
                         </div>
                         <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
                             <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
@@ -101,6 +101,5 @@
         @else
             <x-not-found name="matches"/>
         @endif
-
 
 </x-guest-layout>

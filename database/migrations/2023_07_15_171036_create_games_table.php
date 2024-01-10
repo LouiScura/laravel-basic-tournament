@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('games', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('tournament_id')->constrained('tournaments');
-            $table->foreignId('home_team_id')->constrained('teams');
-            $table->foreignId('away_team_id')->constrained('teams');
+            $table->foreignId('tournament_id')->constrained('tournaments')->cascadeOnDelete();
+            $table->foreignId('home_team_id')->constrained('teams')->cascadeOnDelete();
+            $table->foreignId('away_team_id')->constrained('teams')->cascadeOnDelete();
             $table->unsignedInteger('home_team_score')->default(0);
             $table->unsignedInteger('away_team_score')->default(0);
             $table->timestamps();
