@@ -11,13 +11,17 @@ use App\Http\Controllers\StandingController;
 use App\Http\Controllers\TeamController;
 use App\Livewire\CreatePlayer;
 use App\Livewire\EditPlayer;
+use App\Models\Standing;
 use Illuminate\Support\Facades\Route;
+use Tabuna\Breadcrumbs\Breadcrumbs;
+use Tabuna\Breadcrumbs\Trail;
 
 // Home
 Route::get('/', [GameController::class, 'index'])->name('home');
 
-// Standings
-Route::get('/standings', [StandingController::class, 'index'])->name('standings');
+Route::view('/standings', 'standings.index',
+    ['standings' => Standing::orderBy('points', 'desc')->get()]
+)->name('standings');
 
 // Teams
 Route::get('/teams', [TeamController::class, 'index'])->name('teams');
@@ -45,9 +49,17 @@ Route::group(['middleware'=> 'auth', 'prefix' => 'admin'], function (){
 
     Route::resource('/teams', AdminTeamController::class);
 
-    Route::get('/players/create', CreatePlayer::class)->name('players.create');
+    Route::get('/players/create', CreatePlayer::class)
+        ->name('players.create')
+        ->breadcrumbs(fn (Trail $trail) =>
+            $trail->parent('players.index')->push('Add player', route('players.create'))
+    );
 
-    Route::get('/players/{player}/edit/', EditPlayer::class)->name('players.edit');
+    Route::get('/players/{player}/edit/', EditPlayer::class)
+        ->name('players.edit')
+        ->breadcrumbs(fn (Trail $trail, $player) =>
+            $trail->parent('players.index')->push('Update player', route('players.edit', $player))
+        );
 
     Route::resource('/players', AdminPlayerController::class)->only([
         'index', 'destroy'

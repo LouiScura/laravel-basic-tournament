@@ -1,5 +1,9 @@
 <div class="max-w-5xl mx-auto sm:px-6 lg:px-8 mt-5">
+
+    <x-breadcrumbs />
+
     <h1 class="text-2xl text-green-50 pt-5 pb-4">Create a Player</h1>
+
     <form method="post" enctype="multipart/form-data" wire:submit="save">
 
         @csrf

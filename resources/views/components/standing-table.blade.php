@@ -1,6 +1,6 @@
 @props(['standings'])
-<div class="text-white h-full bg-gray-900">
-    <h1 class="text-3xl font-bold tracking-tight text-white sm:text-4xl text-center py-8">Premier League 2023</h1>
+<div class="text-white h-full bg-gray-900 px-6">
+    <h1 class="text-3xl font-bold tracking-tight text-white sm:text-4xl text-center py-6">Premier League 2023</h1>
     <div class="py-8">
         <div class="max-w-screen-xl px-2 mx-auto">
             <table class="w-full text-base">

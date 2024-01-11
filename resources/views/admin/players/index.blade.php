@@ -1,6 +1,8 @@
 <x-app-layout>
     <div class="max-w-5xl mx-auto sm:px-6 lg:px-8 mt-5 gap-x-8">
 
+        <x-breadcrumbs />
+
         @if(session('message'))
             <div class="mb-3 alert bg-red-600 bg-opacity-50 text-gray-700 font-bold rounded-md p-3">
                 {{ session('message') }}
