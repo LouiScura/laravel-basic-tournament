@@ -26,4 +26,18 @@ class Player extends Model
         return $this->hasMany(GamePlayerStatistics::class,  'player_id', 'id');
     }
 
+    public function goals()
+    {
+        return $this->hasMany(Goal::class);
+    }
+
+    public function scopeFilter($query, array $filters)
+    {
+        $query->when($filters['team'] ?? false, fn($query, $category) =>
+            $query->whereHas('team', fn ($query) =>
+                $query->where('name', $category)
+            )
+        );
+    }
+
 }

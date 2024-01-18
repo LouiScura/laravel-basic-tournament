@@ -2,31 +2,27 @@
 
 namespace App\Livewire\Forms;
 
-use App\Models\Game;
-use App\Models\GamePlayerStatistics;
-use App\Models\Team;
 use Livewire\Attributes\Rule;
 use Livewire\Form;
-use Illuminate\Support\Fluent;
 
 class GameForm extends Form
 {
-    #[Rule('required')]
+    #[Rule('required', as: 'Home Team')]
     public $home_team_id  = '';
 
-    #[Rule('required')]
+    #[Rule('required', as: 'Away Team')]
     public $away_team_id = '';
 
-    #[Rule('required|date')]
+    #[Rule('required|date', as: 'Match date')]
     public $matchDate = '';
 
-    #[Rule('required|numeric')]
+    #[Rule('required|numeric', as: 'Match week')]
     public $matchWeek = '';
 
-    #[Rule('required|numeric')]
+    #[Rule('required|numeric', as: 'Home Team Score')]
     public $home_team_score = null;
 
-    #[Rule('required|numeric')]
+    #[Rule('required|numeric', as: "Away Team Score")]
     public $away_team_score = null ;
 
     #[Rule('numeric')]

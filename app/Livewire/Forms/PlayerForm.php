@@ -17,7 +17,7 @@ class PlayerForm extends Form
     public $first_name = '';
     #[Rule('required|min:4|max:10|alpha:ascii', as: 'Last Name' )]
     public $last_name = '';
-    #[Rule('required|min:4|max:12|alpha:ascii', as: 'Position')]
+    #[Rule('required|min:4|max:12|regex:/^[A-Za-z0-9\s]+$/i', as: 'Position')]
     public $position = '';
     #[Rule('required|alpha_num', as: 'Age')]
     public $age = null;

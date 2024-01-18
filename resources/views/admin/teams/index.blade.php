@@ -47,6 +47,8 @@
                     </div>
                 </div>
             @endforeach
+            <!-- Pagination -->
+            {{ $teams->links() }}
         @else
             <x-not-found name="Teams"/>
         @endif

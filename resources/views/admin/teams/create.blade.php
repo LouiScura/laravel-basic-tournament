@@ -1,5 +1,7 @@
 <x-app-layout>
-    <div class="max-w-5xl mx-auto sm:px-6 lg:px-8 mt-5 flex gap-x-8">
+    <div class="max-w-5xl mx-auto sm:px-6 lg:px-8 mt-5">
+
+        <x-breadcrumbs />
 
         <div class="flex-1">
             <h1 class="text-2xl text-green-50 py-5">Create a team</h1>

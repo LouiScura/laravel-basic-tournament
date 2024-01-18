@@ -5,38 +5,67 @@ namespace App\Actions;
 use App\Models\Player;
 
 class PlayerStatisticsAction {
-    private function getPlayersWithStatistics(callable $filter)
-    {
-        $players = Player::has('gamePlayerStatistics')->with('gamePlayerStatistics')->get();
 
-        return $filteredPlayers = $players->filter($filter);
+    protected $playersWithStatistics;
+
+    public function __construct()
+    {
+        $this->playersWithStatistics = Player::has('gamePlayerStatistics')->with('gamePlayerStatistics')->get();
     }
 
     public function getPlayersWithGoalsScored()
     {
-        return $this->getPlayersWithStatistics(function ($player) {
-            return $player->gamePlayerStatistics->where('goals_scored', '>', 0)->count() > 0;
-        });
+        return $this->playersWithStatistics
+            ->map(function ($player) {
+                $player->total_goals = $player->gamePlayerStatistics
+                    ->sum('goals_scored');
+                return $player;
+            })
+            ->filter(function ($player) {
+                return $player->total_goals > 0;
+            })
+            ->sortByDesc('total_goals');
     }
 
     public function getPlayersWithAssists()
     {
-        return $this->getPlayersWithStatistics(function ($player) {
-            return $player->gamePlayerStatistics->where('assists', '>', 0)->count() > 0;
-        });
+        return $this->playersWithStatistics
+            ->map(function ($player) {
+                $player->total_assists = $player->gamePlayerStatistics
+                    ->sum('assists');
+                return $player;
+            })
+            ->filter(function ($player) {
+                return $player->total_assists > 0;
+            })
+            ->sortByDesc('total_assists');
     }
 
     public function getPlayersWithYellowCards()
     {
-        return $this->getPlayersWithStatistics(function ($player) {
-            return $player->gamePlayerStatistics->where('yellow_cards', '>', 0)->count() > 0;
-        });
+        return $this->playersWithStatistics
+            ->map(function ($player) {
+                $player->total_yellow_cards = $player->gamePlayerStatistics
+                    ->sum('yellow_cards');
+                return $player;
+            })
+            ->filter(function ($player) {
+                return $player->total_yellow_cards > 0;
+            })
+            ->sortByDesc('total_yellow_cards');
     }
 
     public function getPlayersWithRedCards()
     {
-        return $this->getPlayersWithStatistics(function ($player) {
-            return $player->gamePlayerStatistics->where('red_cards', '>', 0)->count() > 0;
-        });
+        return $this->playersWithStatistics
+            ->map(function ($player) {
+                $player->total_red_cards = $player->gamePlayerStatistics
+                    ->sum('red_cards');
+                return $player;
+            })
+            ->filter(function ($player) {
+                return $player->total_red_cards > 0;
+            })
+            ->sortByDesc('total_red_cards');
     }
 }

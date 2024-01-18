@@ -1,11 +1,11 @@
 <x-guest-layout>
-    <div class="relative overflow-x-auto sm:rounded-lg">
+    <div class="relative overflow-x-auto sm:rounded-lg px-6 mb-5">
 
         @if($playersWithGoalsScored->isNotEmpty())
             @include('partials.player-statistics-table ', [
-                'title' => 'Goals',
+                'title' => 'Most Goals',
                 'players' => $playersWithGoalsScored,
-                'statistic' => 'goals_scored'
+                'stat'  => 'total_goals',
             ])
         @else
             <x-not-found name="Goals"/>
@@ -13,9 +13,9 @@
 
         @if($playersWithAssists->isNotEmpty())
             @include('partials.player-statistics-table', [
-                'title' => 'Assists',
+                'title' => 'Most Assists',
                 'players' => $playersWithAssists,
-                'statistic' => 'assists'
+                'stat'  => 'total_assists',
             ])
         @else
             <x-not-found name="Assists"/>
@@ -23,9 +23,9 @@
 
         @if($playersWithYellowCards->isNotEmpty())
             @include('partials.player-statistics-table', [
-                'title' => 'Yellow Cards',
+                'title' => 'Most Yellow Cards',
                 'players' => $playersWithYellowCards,
-                'statistic' => 'yellow_cards'
+                'stat'  => 'total_yellow_cards',
             ])
         @else
             <x-not-found name="Yellow Cards"/>
@@ -33,9 +33,9 @@
 
         @if($playersWithRedCards->isNotEmpty())
             @include('partials.player-statistics-table', [
-                'title' => 'Red Cards',
+                'title' => 'Most Red Cards',
                 'players' => $playersWithRedCards,
-                'statistic' => 'red_cards'
+                'stat'  => 'total_red_cards',
             ])
         @else
             <x-not-found name="Red Cards"/>

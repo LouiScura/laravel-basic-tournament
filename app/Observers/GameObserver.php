@@ -19,7 +19,6 @@ class GameObserver
             $this->updateStandings($homeTeamId, $awayTeamId, $winnerTeamId);
         }
     }
-//
     private function determineWinner(Game $game)
     {
         $homeTeamGoals = $game->home_team_score ?? null;
@@ -35,22 +34,25 @@ class GameObserver
         }
     }
 
-    private function updateStandings($winnerTeamId, $homeTeamId, $awayTeamId)
+    private function updateStandings($homeTeamId, $awayTeamId, $winnerTeamId)
     {
-        $teamsToUpdate = array_filter([$homeTeamId, $awayTeamId, $winnerTeamId]);
-
         if ($winnerTeamId !== null) {
+
             // Update standings for a match with a winner
             Standing::where('team_id', $winnerTeamId)->increment('points', 3);
+
             Standing::where('team_id', $winnerTeamId)->increment('wins');
-            Standing::where('team_id', $homeTeamId == $winnerTeamId ? $awayTeamId : $homeTeamId)->increment('losses');
+
+            // Determine the losing team's ID
+            $losingTeamId = ($homeTeamId == $winnerTeamId) ? $awayTeamId : $homeTeamId;
+
+            Standing::where('team_id', $losingTeamId)->increment('losses');
         } else {
             // Update standings for a draw
-            // You might want to adjust the points distribution for a draw
             Standing::where('team_id', $homeTeamId)->increment('points', 1);
             Standing::where('team_id', $awayTeamId)->increment('points', 1);
             Standing::whereIn('team_id', [$homeTeamId, $awayTeamId])->increment('draws');
         }
-
     }
+
 }

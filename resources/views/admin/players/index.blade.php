@@ -16,6 +16,10 @@
                 Create new player
             </a>
 
+            <div class="relative">
+                <x-team-dropdown :teams="$teams"/>
+            </div>
+
         </div>
         @if($players->isNotEmpty())
             @foreach($players as $player)
@@ -50,9 +54,11 @@
                     </div>
                 </div>
             @endforeach
+
+            {{ $players->links() }}
         @else
             <x-not-found name="Players"/>
         @endif
 
     </div>
-</x-app-layout>
+</x-app-layout> 

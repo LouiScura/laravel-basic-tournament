@@ -20,7 +20,10 @@ use Tabuna\Breadcrumbs\Trail;
 Route::get('/', [GameController::class, 'index'])->name('home');
 
 Route::view('/standings', 'standings.index',
-    ['standings' => Standing::orderBy('points', 'desc')->get()]
+    [
+    'standings' => Standing::orderBy('points', 'desc')
+    ->orderBy('wins', 'desc')
+    ->get()]
 )->name('standings');
 
 // Teams

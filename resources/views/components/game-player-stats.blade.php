@@ -2,40 +2,32 @@
 
 <div class="flex">
     <!-- Players  -->
-    <div class="mb-6 flex-1">
-        <x-input-label for="player" :value="__('Player')" class="pb-3" />
-        <select name="player" wire:model="player" class="w-full">
-            @foreach ($players as $player)
-                <option value="{{ $player->id }}" @if(old('player') == $player->id || !old('player') && $loop->first) selected @endif wire:key="{{ $player->id }}">
-                    {{ $player->last_name }}, {{ $player->first_name }}
-                </option>
-            @endforeach
-        </select>
+    <div x-data="{ new_players: @entangle('new_players') }">
+        <template x-for="(playerStat, index) in new_players" :key="index">
+            <div class="mt-5">
+                <input type="number" name="goals_scored" x-model="playerStat.goals_scored" placeholder="Goals Scored">
+                <input type="number" x-model="playerStat.yellow_cards" placeholder="Yellow Cards">
+                <input type="number" x-model="playerStat.red_cards" placeholder="Red Cards">
+                <input type="number" x-model="playerStat.assists" placeholder="Assists">
+                <select x-model="playerStat.player_id">
+                    <!-- Loop over $players for options -->
+                    @foreach ($players as $optionPlayer)
+                        <option value="{{ $optionPlayer->id }}">{{ $optionPlayer->first_name }} {{ $optionPlayer->last_name }}</option>
+                    @endforeach
+                </select>
+                <button type="button"
+                        @click="new_players.splice(index, 1)"
+                        class="inline-flex items-center px-4 py-2 mt-3 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">
+                    Remove
+                </button>
+            </div>
+        </template>
 
-        <x-input-error :messages="$errors->get('form.away_team_id')" class="mt-3" />
+        <button type="button"
+                class="px-4 py-2 mt-3 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150"
+                @click="new_players.push({ player_id: '', goals_scored: null, yellow_cards: null, red_cards: null, assists: null })">
+            Add Player Stats
+        </button>
     </div>
 
-    <!-- Yellow Cards  -->
-    <div class="mb-6 flex-1">
-        <x-input-label for="yellow_cards" :value="__('Yellow Cards')" class="pb-3"/>
-        <input type="number" id="yellow_cards" name="yellow_cards" min="1" max="10" wire:model="form.yellow_cards">
-    </div>
-
-    <!-- Red Cards  -->
-    <div class="mb-6 flex-1">
-        <x-input-label for="red_cards" :value="__('Red Cards')" class="pb-3"/>
-        <input type="number" id="red_cards" name="red_cards" min="1" max="10" wire:model="form.red_cards">
-    </div>
-
-    <!-- Goals Scored  -->
-    <div class="mb-6 flex-1">
-        <x-input-label for="goals_scored" :value="__('Goals Scored')" class="pb-3"/>
-        <input type="number" id="goals_scored" name="goals_scored" min="1" max="10" wire:model="form.goals_scored">
-    </div>
-
-    <!-- Assists  -->
-    <div class="mb-6 flex-1">
-        <x-input-label for="assists" :value="__('Assists')" class="pb-3"/>
-        <input type="number" id="assists" name="assists" min="1" max="10" wire:model="form.assists">
-    </div>
 </div>

@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('game_id');
             $table->unsignedBigInteger('player_id');
-            $table->integer('yellow_cards')->default(0);
-            $table->integer('red_cards')->default(0);
-            $table->integer('goals_scored')->default(0);
+            $table->integer('yellow_cards')->default(0)->nullable();
+            $table->integer('red_cards')->default(0)->nullable();
+            $table->integer('goals_scored')->default(0)->nullable();
             $table->timestamps();
             $table->foreign('game_id')->references('id')->on('games')->onDelete('cascade');
             $table->foreign('player_id')->references('id')->on('players')->onDelete('cascade');
